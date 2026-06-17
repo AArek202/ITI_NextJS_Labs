@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///G:/ITImaterial/NextJS/Day1/Lab/my-app/pages/_app.tsx"],"sourcesContent":["import type { AppProps } from \"next/app\";\nimport type { NextPage } from \"next\";\nimport type { ReactElement, ReactNode } from \"react\";\nimport { ToastProvider } from \"@/context/ToastContext\";\nimport \"../styles/globals.css\";\n\nexport type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {\n  getLayout?: (page: ReactElement) => ReactNode;\n};\n\ntype AppPropsWithLayout = AppProps & {\n  Component: NextPageWithLayout;\n};\n\nexport default function App({ Component, pageProps }: AppPropsWithLayout) {\n  // Use the layout defined at the page level, if available\n  const getLayout = Component.getLayout ?? ((page) => page);\n\n  return getLayout(<Component {...pageProps} />);\n}\n"],"names":["App","Component","pageProps","getLayout","page"],"mappings":";;;;;;;AAce,SAASA,IAAI,EAAEC,SAAS,EAAEC,SAAS,EAAsB;IACtE,yDAAyD;IACzD,MAAMC,YAAYF,UAAUE,SAAS,IAAI,CAAC,CAACC,OAASA,IAAI;IAExD,OAAOD,wBAAU,qKAACF;QAAW,GAAGC,SAAS;;;;;;AAC3C"}}]
+}
