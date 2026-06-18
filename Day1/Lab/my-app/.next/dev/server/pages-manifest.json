@@ -1,7 +1,0 @@
-{
-  "/404": "pages/404.js",
-  "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
-  "/products": "pages/products.js",
-  "/shop": "pages/shop.js"
-}

@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///G:/ITImaterial/NextJS/Day1/Lab/my-app/pages/404.tsx"],"sourcesContent":["export default function Custom404() {\n  return (\n    <div className=\"h-screen flex flex-col justify-center items-center bg-gray-100\">\n      <h1 className=\"text-6xl font-bold text-red-500\">404</h1>\n      <p className=\"text-xl text-gray-700 mt-2\">\n        Oops! This page does not exist.\n      </p>\n    </div>\n  );\n}\n"],"names":["Custom404","className"],"mappings":";;;;;;AAAe,SAASA;IACtB,qBACE,qKAAC;QAAIC,WAAU;;0BACb,qKAAC;gBAAGA,WAAU;0BAAkC;;;;;;0BAChD,qKAAC;gBAAEA,WAAU;0BAA6B;;;;;;;;;;;;AAKhD"}}]
-}
