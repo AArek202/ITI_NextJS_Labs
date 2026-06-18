@@ -1,12 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { Product } from "../../types";
+import { IProduct } from "../../types";
 import Image from "next/image";
 import { ReactElement } from "react";
 import NavbarLayout from "@/components/NavbarLayout";
 
 interface ProductDetailPageProps {
-  product: Product;
+  product: IProduct;
 }
 
 export default function ProductDetailPage({ product }: ProductDetailPageProps) {
@@ -59,10 +59,10 @@ ProductDetailPage.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const res = await fetch("https://dummyjson.com/products?limit=5");
+    const res = await fetch("http://localhost:3000/api/products?limit=5");
     const data = await res.json();
-    const paths = data.products.map((p: Product) => ({
-      params: { id: p.id.toString() },
+    const paths = data.products.map((p: IProduct) => ({
+      params: { id: p._id.toString() },
     }));
     return { paths, fallback: true };
   } catch {
@@ -72,8 +72,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const res = await fetch(`https://dummyjson.com/products/${params?.id}`);
-    const product: Product = await res.json();
+    const res = await fetch(`http://localhost:3000/api/products/${params?.id}`);
+    const product: IProduct = await res.json();
     return { props: { product }, revalidate: 60 };
   } catch {
     return { notFound: true };

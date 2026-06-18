@@ -1,10 +1,10 @@
 import { useState, useTransition, useMemo, ReactElement } from "react";
 import { GetStaticProps } from "next";
-import { Product } from "../types";
+import { IProduct } from "../types";
 import NavbarLayout from "@/components/NavbarLayout";
 import Link from "next/link";
 
-export default function ShopPage({ products }: { products: Product[] }) {
+export default function ShopPage({ products }: { products: IProduct[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [deferredSearch, setDeferredSearch] = useState("");
   const [sortConfig, setSortConfig] = useState<{
@@ -115,8 +115,11 @@ export default function ShopPage({ products }: { products: Product[] }) {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {filteredProducts.map((p) => (
-          <Link href={`/products/${p.id}`} key={p.id}>
-            <div key={p.id} className="border p-4 rounded shadow bg-white">
+          <Link href={`/products/${p._id.toString()}`} key={p._id.toString()}>
+            <div
+              key={p._id.toString()}
+              className="border p-4 rounded shadow bg-white"
+            >
               <h3 className="font-semibold line-clamp-1">{p.title}</h3>
               <p className="text-green-600 font-bold">${p.price}</p>
               <p className="text-sm text-yellow-500">★ {p.rating}</p>
@@ -134,13 +137,13 @@ ShopPage.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const res = await fetch("https://dummyjson.com/products?limit=100");
+    const res = await fetch("http://localhost:3000/api/products");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
-    return { props: { products: data.products ?? [] }, revalidate: 60 };
+    return { props: { products: data.products ?? [] }, revalidate: 10 };
   } catch (err) {
-    console.error("Failed to fetch products:", err);
+    console.error(err);
     return { props: { products: [] } };
   }
 };

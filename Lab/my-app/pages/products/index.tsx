@@ -1,15 +1,16 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { Product } from "../../types/index";
+// import { Product } from "../../types/index";
 import Image from "next/image";
 import { ReactElement, useState } from "react";
 import NavbarLayout from "@/components/NavbarLayout";
 import { useToast } from "@/context/ToastContext";
+import { IProduct } from "@/types";
 
 const PAGE_SIZE = 9;
 
 interface ProductsPageProps {
-  products: Product[];
+  products: IProduct[];
 }
 
 export default function ProductsPage({ products }: ProductsPageProps) {
@@ -32,7 +33,7 @@ export default function ProductsPage({ products }: ProductsPageProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {paginated.map((product) => (
-          <Link href={`/products/${product.id}`} key={product.id}>
+          <Link href={`/products/${product._id.toString()}`} key={product._id.toString()}>
             <div className="border rounded-lg p-4 shadow hover:shadow-lg transition cursor-pointer bg-white">
               <Image
                 src={product.thumbnail || "/placeholder.png"}
@@ -99,15 +100,13 @@ ProductsPage.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const res = await fetch("https://dummyjson.com/products?limit=100");
+    const res = await fetch("http://localhost:3000/api/products");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
-    const products: Product[] = data.products ?? [];
-
-    return { props: { products }, revalidate: 60 };
+    return { props: { products: data.products ?? [] }, revalidate: 10 };
   } catch (err) {
-    console.error("Failed to fetch products:", err);
+    console.error(err);
     return { props: { products: [] } };
   }
 };
