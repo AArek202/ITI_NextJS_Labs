@@ -1,0 +1,14 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Item {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String   @db.Text
+  createdAt   DateTime @default(now())
+}
